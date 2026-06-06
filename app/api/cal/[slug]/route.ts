@@ -24,31 +24,44 @@ export async function GET(
     return new NextResponse('Calendar not found', { status: 404 })
   }
 
-  const cacheKey = `cal:${cleanSlug}`
+  const filterParam = req.nextUrl.searchParams.get('e')
+  const externalIds = filterParam
+    ? [...new Set(filterParam.split(',').map((s) => s.trim()).filter(Boolean))].slice(0, 100)
+    : null
+
+  const cacheKey = externalIds ? null : `cal:${cleanSlug}`
   const TTL = 3600
 
-  // Try Redis cache first
-  const cached = await cacheGet<string>(cacheKey)
-  if (cached) {
-    return new NextResponse(cached, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/calendar; charset=utf-8',
-        'Cache-Control': `public, max-age=${TTL}, s-maxage=${TTL}`,
-        'Content-Disposition': `inline; filename="${cleanSlug}.ics"`,
-        'X-Cache': 'HIT',
-      },
-    })
+  if (cacheKey) {
+    const cached = await cacheGet<string>(cacheKey)
+    if (cached) {
+      return new NextResponse(cached, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/calendar; charset=utf-8',
+          'Cache-Control': `public, max-age=${TTL}, s-maxage=${TTL}`,
+          'Content-Disposition': `inline; filename="${cleanSlug}.ics"`,
+          'X-Cache': 'HIT',
+        },
+      })
+    }
   }
 
   const now = new Date()
   const events = await prisma.event.findMany({
-    where: { calendarId: calendar.id, endDatetime: { gt: now } },
+    where: {
+      calendarId: calendar.id,
+      endDatetime: { gt: now },
+      ...(externalIds?.length ? { externalId: { in: externalIds } } : {}),
+    },
     orderBy: { startDatetime: 'asc' },
-    take: 200,
+    take: externalIds?.length ? externalIds.length : 200,
   })
 
-  const cal = ical({ name: `Cronva — ${calendar.name}` })
+  const calName = externalIds?.length
+    ? `Cronva — ${calendar.name} (${events.length} selected)`
+    : `Cronva — ${calendar.name}`
+  const cal = ical({ name: calName })
   for (const ev of events) {
     cal.createEvent({
       id: `${ev.externalId}@cronva.app`,
@@ -64,16 +77,17 @@ export async function GET(
 
   const icsString = cal.toString()
 
-  // Cache in Redis
-  await cacheSet(cacheKey, icsString, TTL)
+  if (cacheKey) {
+    await cacheSet(cacheKey, icsString, TTL)
+  }
 
   return new NextResponse(icsString, {
     status: 200,
     headers: {
       'Content-Type': 'text/calendar; charset=utf-8',
-      'Cache-Control': `public, max-age=${TTL}, s-maxage=${TTL}`,
+      'Cache-Control': externalIds ? 'private, no-cache' : `public, max-age=${TTL}, s-maxage=${TTL}`,
       'Content-Disposition': `inline; filename="${cleanSlug}.ics"`,
-      'X-Cache': 'MISS',
+      'X-Cache': cacheKey ? 'MISS' : 'BYPASS',
     },
   })
 }

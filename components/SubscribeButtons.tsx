@@ -5,43 +5,50 @@ import { useState } from 'react'
 interface Props {
   slug: string
   baseUrl: string
+  selectedExternalIds?: string[]
+  disabled?: boolean
 }
 
-export function SubscribeButtons({ slug, baseUrl }: Props) {
+function buildIcsPath(slug: string, selectedExternalIds?: string[]): string {
+  const base = `/api/cal/${slug}.ics`
+  if (!selectedExternalIds?.length) return base
+  return `${base}?e=${selectedExternalIds.map(encodeURIComponent).join(',')}`
+}
+
+export function SubscribeButtons({ slug, baseUrl, selectedExternalIds, disabled }: Props) {
   const [copied, setCopied] = useState(false)
 
-  const icsPath = `/api/cal/${slug}.ics`
-  const webcalUrl = `webcal://${baseUrl.replace(/^https?:\/\//, '')}${icsPath}`
+  const icsPath = buildIcsPath(slug, selectedExternalIds)
+  const httpsBase = baseUrl.replace(/^http:\/\//, 'https://')
+  const webcalUrl = `webcal://${httpsBase.replace(/^https?:\/\//, '')}${icsPath}`
+  const httpsIcsUrl = `${httpsBase}${icsPath}`
   const encodedWebcal = encodeURIComponent(webcalUrl)
 
   const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodedWebcal}`
   const appleUrl = webcalUrl
   const outlookUrl = `https://outlook.live.com/calendar/0/addfromweb?url=${encodedWebcal}`
 
+  const btnStyle = disabled ? { opacity: 0.45, pointerEvents: 'none' as const } : undefined
+
   async function handleCopy() {
+    if (disabled) return
     try {
       await navigator.clipboard.writeText(webcalUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 2500)
-    } catch {
-      // fallback: select text from a temp input
-    }
+    } catch {}
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 12,
-      }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <a
         href={googleUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="btn-subscribe"
-        style={{ justifyContent: 'flex-start' }}
+        style={{ justifyContent: 'flex-start', ...btnStyle }}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
       >
         <GoogleCalIcon />
         Add to Google Calendar
@@ -50,7 +57,9 @@ export function SubscribeButtons({ slug, baseUrl }: Props) {
       <a
         href={appleUrl}
         className="btn-subscribe"
-        style={{ justifyContent: 'flex-start' }}
+        style={{ justifyContent: 'flex-start', ...btnStyle }}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
       >
         <AppleCalIcon />
         Add to Apple Calendar
@@ -61,14 +70,29 @@ export function SubscribeButtons({ slug, baseUrl }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         className="btn-subscribe"
-        style={{ justifyContent: 'flex-start' }}
+        style={{ justifyContent: 'flex-start', ...btnStyle }}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
       >
         <OutlookIcon />
         Add to Outlook
       </a>
 
+      <a
+        href={httpsIcsUrl}
+        download={`${slug}.ics`}
+        className="btn-subscribe"
+        style={{ justifyContent: 'flex-start', ...btnStyle }}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
+      >
+        <DownloadIcon />
+        Download .ics file
+      </a>
+
       <button
         onClick={handleCopy}
+        disabled={disabled}
         className="btn-subscribe"
         style={{
           justifyContent: 'flex-start',
@@ -76,6 +100,7 @@ export function SubscribeButtons({ slug, baseUrl }: Props) {
             ? '1px solid rgba(26,63,111,0.25)'
             : '1px solid var(--color-blue)',
           color: copied ? 'var(--color-fog)' : 'var(--color-blue)',
+          opacity: disabled ? 0.45 : 1,
         }}
       >
         <LinkIcon />
@@ -111,6 +136,15 @@ function OutlookIcon() {
       <rect x="2" y="4" width="20" height="16" rx="2" stroke="#4A9FE8" strokeWidth="1.5" />
       <path d="M2 9h20" stroke="#4A9FE8" strokeWidth="1.5" />
       <rect x="5" y="12" width="6" height="5" rx="1" fill="#4A9FE8" opacity="0.6" />
+    </svg>
+  )
+}
+
+function DownloadIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M12 3v12M7 10l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 19h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }

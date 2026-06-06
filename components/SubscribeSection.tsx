@@ -10,6 +10,8 @@ interface Props {
   calendarSlug: string
   baseUrl: string
   isSubscribed: boolean
+  pickable?: boolean
+  selectedExternalIds?: string[]
 }
 
 export function SubscribeSection({
@@ -18,6 +20,8 @@ export function SubscribeSection({
   calendarSlug,
   baseUrl,
   isSubscribed: initialSubscribed,
+  pickable = false,
+  selectedExternalIds,
 }: Props) {
   const { data: session } = useSession()
   const [subscribed, setSubscribed] = useState(initialSubscribed)
@@ -81,10 +85,14 @@ export function SubscribeSection({
         }}
       >
         <h2 style={{ fontWeight: 500, fontSize: '15px', color: 'var(--color-navy)', marginBottom: 6 }}>
-          Subscribe to this calendar
+          {pickable ? 'Add to your calendar' : 'Subscribe to this calendar'}
         </h2>
         <p style={{ fontSize: '13px', color: 'var(--color-fog)', marginBottom: 20 }}>
-          Fixtures auto-sync to your calendar app. Updates happen automatically.
+          {pickable
+            ? selectedExternalIds && selectedExternalIds.length > 0
+              ? `${selectedExternalIds.length} event${selectedExternalIds.length !== 1 ? 's' : ''} selected — only these will be added.`
+              : 'Tick specific events on the left, or add the full calendar below.'
+            : 'Fixtures auto-sync to your calendar app. Updates happen automatically.'}
         </p>
 
         {session ? (
@@ -122,7 +130,15 @@ export function SubscribeSection({
           </button>
         )}
 
-        <SubscribeButtons slug={calendarSlug} baseUrl={baseUrl} />
+        <SubscribeButtons
+          slug={calendarSlug}
+          baseUrl={baseUrl}
+          selectedExternalIds={
+            pickable && selectedExternalIds && selectedExternalIds.length > 0
+              ? selectedExternalIds
+              : undefined
+          }
+        />
 
         <button
           onClick={handleWhatsApp}
@@ -170,7 +186,6 @@ export function SubscribeSection({
     </>
   )
 }
-
 function WhatsAppIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366">
@@ -178,3 +193,4 @@ function WhatsAppIcon() {
     </svg>
   )
 }
+

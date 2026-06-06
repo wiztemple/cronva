@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const CATEGORIES = ['football', 'basketball', 'f1', 'entertainment', 'tv', 'boxing', 'local', 'other']
+const CATEGORIES = ['football', 'basketball', 'tennis', 'f1', 'entertainment', 'tv', 'boxing', 'local', 'other']
 
 export function RequestForm() {
   const [form, setForm] = useState({ email: '', calendarName: '', description: '', category: '' })

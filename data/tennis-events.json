@@ -1,0 +1,83 @@
+[
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-roland-garros-2026-mens-final",
+    "title": "French Open — Men's Final",
+    "startDatetime": "2026-06-07T15:00:00+02:00",
+    "endDatetime": "2026-06-07T18:00:00+02:00",
+    "description": "Roland Garros men's singles championship match.",
+    "location": "Court Philippe-Chatrier, Paris"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-roland-garros-2026-womens-final",
+    "title": "French Open — Women's Final",
+    "startDatetime": "2026-06-06T15:00:00+02:00",
+    "endDatetime": "2026-06-06T18:00:00+02:00",
+    "description": "Roland Garros women's singles championship match.",
+    "location": "Court Philippe-Chatrier, Paris"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-wimbledon-2026-day1",
+    "title": "Wimbledon — Day 1 (Main Draw)",
+    "startDatetime": "2026-06-29T11:00:00+01:00",
+    "endDatetime": "2026-06-29T22:00:00+01:00",
+    "description": "The Championships Wimbledon 2026 main draw begins.",
+    "location": "All England Club, London"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-wimbledon-2026-mens-final",
+    "title": "Wimbledon — Men's Final",
+    "startDatetime": "2026-07-12T14:00:00+01:00",
+    "endDatetime": "2026-07-12T17:30:00+01:00",
+    "description": "Wimbledon men's singles final on Centre Court.",
+    "location": "Centre Court, London"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-wimbledon-2026-womens-final",
+    "title": "Wimbledon — Women's Final",
+    "startDatetime": "2026-07-11T14:00:00+01:00",
+    "endDatetime": "2026-07-11T17:30:00+01:00",
+    "description": "Wimbledon women's singles final on Centre Court.",
+    "location": "Centre Court, London"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-us-open-2026-day1",
+    "title": "US Open — Day 1 (Main Draw)",
+    "startDatetime": "2026-08-31T16:00:00-04:00",
+    "endDatetime": "2026-09-01T02:00:00-04:00",
+    "description": "US Open 2026 main draw begins at Flushing Meadows.",
+    "location": "USTA Billie Jean King National Tennis Center, New York"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-us-open-2026-mens-final",
+    "title": "US Open — Men's Final",
+    "startDatetime": "2026-09-13T16:00:00-04:00",
+    "endDatetime": "2026-09-13T19:30:00-04:00",
+    "description": "US Open men's singles final.",
+    "location": "Arthur Ashe Stadium, New York"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-us-open-2026-womens-final",
+    "title": "US Open — Women's Final",
+    "startDatetime": "2026-09-12T16:00:00-04:00",
+    "endDatetime": "2026-09-12T19:30:00-04:00",
+    "description": "US Open women's singles final.",
+    "location": "Arthur Ashe Stadium, New York"
+  },
+  {
+    "calendarSlug": "tennis-grand-slams",
+    "externalId": "gs-australian-open-2027-day1",
+    "title": "Australian Open 2027 — Day 1",
+    "startDatetime": "2027-01-18T00:00:00+11:00",
+    "endDatetime": "2027-01-18T14:00:00+11:00",
+    "description": "First Grand Slam of 2027.",
+    "location": "Melbourne Park, Australia"
+  }
+]

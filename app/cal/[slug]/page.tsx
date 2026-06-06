@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db/client'
-import { SubscribeSection } from '@/components/SubscribeSection'
+import { CalendarDetailLayout } from '@/components/CalendarDetailLayout'
 import { CalendarCard } from '@/components/CalendarCard'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -30,24 +30,6 @@ export async function generateStaticParams() {
   return calendars.map((c) => ({ slug: c.slug }))
 }
 
-function formatWAT(date: Date): string {
-  return new Intl.DateTimeFormat('en-NG', {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'Africa/Lagos',
-  }).format(date)
-}
-
-function formatTimeWAT(date: Date): string {
-  return new Intl.DateTimeFormat('en-NG', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-    timeZone: 'Africa/Lagos',
-  }).format(date)
-}
-
 function formatSubscriberCount(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`
@@ -67,6 +49,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 const CATEGORY_LABELS: Record<string, string> = {
   football: 'Football',
   basketball: 'Basketball',
+  tennis: 'Tennis',
   f1: 'F1',
   entertainment: 'Entertainment',
   tv: 'Movies & TV',
@@ -90,6 +73,8 @@ export default async function CalendarPage({ params }: Props) {
       }).then(Boolean)
     : false
 
+  const eventLimit = 50
+
   const upcomingEvents = await prisma.event.findMany({
     where: {
       calendarId: calendar.id,
@@ -97,7 +82,7 @@ export default async function CalendarPage({ params }: Props) {
       startDatetime: { gt: now },
     },
     orderBy: { startDatetime: 'asc' },
-    take: 10,
+    take: eventLimit,
   })
 
   const relatedCalendars = await prisma.calendar.findMany({
@@ -160,66 +145,21 @@ export default async function CalendarPage({ params }: Props) {
         )}
       </div>
 
-      <div
-        style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: 48, alignItems: 'start' }}
-        className="cal-detail-grid"
-      >
-        {/* Left: Upcoming events */}
-        <section>
-          <h2 style={{ fontWeight: 500, fontSize: '16px', letterSpacing: '-0.1px', color: 'var(--color-navy)', marginBottom: 16 }}>
-            Upcoming events
-          </h2>
-          {upcomingEvents.length === 0 ? (
-            <p style={{ color: 'var(--color-fog)', fontSize: '15px', padding: '32px 0' }}>
-              No upcoming events scheduled yet.
-            </p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-              {upcomingEvents.map((ev, i: number) => (
-                <div
-                  key={ev.id}
-                  style={{
-                    display: 'grid', gridTemplateColumns: '80px 60px 1fr', gap: 16,
-                    padding: '14px 0',
-                    borderBottom: i < upcomingEvents.length - 1 ? '1px solid rgba(26,63,111,0.08)' : 'none',
-                    alignItems: 'start',
-                  }}
-                >
-                  <div>
-                    <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-navy)' }}>
-                      {formatWAT(ev.startDatetime)}
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: '12px', color: 'var(--color-fog)' }}>
-                      {formatTimeWAT(ev.startDatetime)} WAT
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--color-navy)', marginBottom: 2 }}>
-                      {ev.title}
-                    </p>
-                    {ev.location && (
-                      <p style={{ fontSize: '12px', color: 'var(--color-fog)' }}>{ev.location}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* Right: Subscribe */}
-        <aside>
-          <SubscribeSection
-            calendarId={calendar.id}
-            calendarName={calendar.name}
-            calendarSlug={slug}
-            baseUrl={baseUrl}
-            isSubscribed={!!isSubscribed}
-          />
-        </aside>
-      </div>
+      <CalendarDetailLayout
+        events={upcomingEvents.map((ev) => ({
+          id: ev.id,
+          externalId: ev.externalId,
+          title: ev.title,
+          startDatetime: ev.startDatetime.toISOString(),
+          location: ev.location,
+        }))}
+        pickable={upcomingEvents.length > 0}
+        calendarId={calendar.id}
+        calendarName={calendar.name}
+        calendarSlug={slug}
+        baseUrl={baseUrl}
+        isSubscribed={!!isSubscribed}
+      />
 
       {/* Related calendars */}
       {relatedCalendars.length > 0 && (

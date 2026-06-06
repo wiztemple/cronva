@@ -17,6 +17,7 @@
     "db:seed:aladhan": "tsx prisma/seed-aladhan.ts",
     "db:seed:africa": "tsx prisma/seed-africa.ts",
     "db:seed:tv": "tsx prisma/seed-tv.ts",
+    "db:seed:tennis": "tsx prisma/seed-tennis.ts",
     "db:studio": "prisma studio",
     "sync": "tsx scripts/sync-once.ts"
   },

@@ -6,6 +6,7 @@ import { F1Fetcher } from '@/lib/fetchers/f1'
 import { ManualFetcher } from '@/lib/fetchers/manual'
 import { TvFetcher } from '@/lib/fetchers/tv'
 import { TmdbFetcher } from '@/lib/fetchers/tmdb'
+import { TennisFetcher } from '@/lib/fetchers/tennis'
 import { AladhanFetcher } from '@/lib/fetchers/aladhan'
 import { pollLiveScores } from '@/lib/fetchers/live-scores'
 import { sendWeeklyDigests } from '@/lib/email/digest'
@@ -23,6 +24,7 @@ export async function runSyncOnce() {
     new ManualFetcher(),
     new TvFetcher(),
     new TmdbFetcher(),
+    new TennisFetcher(),
     new F1Fetcher(),
     new TheSportsDBFetcher(),
     new FootballDataFetcher(),

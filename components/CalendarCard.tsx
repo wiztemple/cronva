@@ -13,6 +13,7 @@ interface CalendarCardProps {
 const CATEGORY_LABELS: Record<string, string> = {
   football: 'Football',
   basketball: 'Basketball',
+  tennis: 'Tennis',
   f1: 'F1',
   entertainment: 'Entertainment',
   tv: 'Movies & TV',

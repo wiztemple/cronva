@@ -6,6 +6,7 @@ const TABS = [
   { value: 'all', label: 'All' },
   { value: 'football', label: 'Football' },
   { value: 'basketball', label: 'Basketball' },
+  { value: 'tennis', label: 'Tennis' },
   { value: 'f1', label: 'F1' },
   { value: 'entertainment', label: 'Entertainment' },
   { value: 'tv', label: 'Movies & TV' },

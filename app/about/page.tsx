@@ -178,7 +178,11 @@ export default function AboutPage() {
               },
               {
                 name: 'TheSportsDB',
-                desc: 'NBA, World Championship Boxing, Tennis Grand Slams',
+                desc: 'NBA and World Championship Boxing',
+              },
+              {
+                name: 'API-Tennis (api-tennis.com)',
+                desc: 'ATP and WTA singles fixtures — optional, requires API_TENNIS_KEY',
               },
               {
                 name: 'OpenF1 (openf1.org)',
@@ -190,7 +194,7 @@ export default function AboutPage() {
               },
               {
                 name: 'Manually curated',
-                desc: 'TV episode air dates, Big Brother Naija, Afrobeats tours, Nollywood premieres',
+                desc: 'Tennis Grand Slams, TV episodes, BBNaija, Afrobeats tours, Nollywood premieres',
               },
             ].map(({ name, desc }) => (
               <div
