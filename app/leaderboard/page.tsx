@@ -7,64 +7,68 @@ export const metadata: Metadata = {
   description: 'Top Cronva prediction makers — weekly and all-time accuracy rankings.',
 }
 
-async function getWeeklyLeaderboard() {
-  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+async function getLeaderboardRows(where: { createdAt?: { gte: Date } }) {
+  const baseWhere = { userId: { not: null }, ...where }
 
-  const rows = await prisma.prediction.groupBy({
-    by: ['userId'],
-    where: { userId: { not: null }, createdAt: { gte: since } },
-    _count: { id: true },
-    _sum: { isCorrect: true } as never,
-  })
+  const [totals, corrects] = await Promise.all([
+    prisma.prediction.groupBy({
+      by: ['userId'],
+      where: baseWhere,
+      _count: { id: true },
+    }),
+    prisma.prediction.groupBy({
+      by: ['userId'],
+      where: { ...baseWhere, isCorrect: true },
+      _count: { id: true },
+    }),
+  ])
 
-  const userIds = rows.map((r) => r.userId).filter(Boolean) as string[]
+  const correctByUser = Object.fromEntries(
+    corrects.map((r) => [r.userId, r._count.id])
+  )
+
+  const userIds = totals.map((r) => r.userId).filter(Boolean) as string[]
   const users = await prisma.user.findMany({
     where: { id: { in: userIds } },
     select: { id: true, name: true, image: true },
   })
   const userMap = Object.fromEntries(users.map((u) => [u.id, u]))
 
-  return rows
-    .map((r) => {
-      const total = r._count.id
-      const correct = (r as Record<string, unknown>)['_sum']
-        ? ((r as Record<string, { isCorrect?: number }>)['_sum'].isCorrect ?? 0)
-        : 0
-      const accuracy = total > 0 ? Math.round((Number(correct) / total) * 100) : 0
-      const user = r.userId ? userMap[r.userId] : null
-      return { userId: r.userId, name: user?.name ?? 'Anonymous', image: user?.image, total, correct: Number(correct), accuracy }
-    })
-    .filter((r) => r.total >= 3)
-    .sort((a, b) => b.correct - a.correct || b.accuracy - a.accuracy)
-    .slice(0, 20)
+  return totals.map((r) => {
+    const total = r._count.id
+    const correct = r.userId ? (correctByUser[r.userId] ?? 0) : 0
+    const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0
+    const user = r.userId ? userMap[r.userId] : null
+    return {
+      userId: r.userId,
+      name: user?.name ?? 'Anonymous',
+      image: user?.image,
+      total,
+      correct,
+      accuracy,
+    }
+  })
+}
+
+async function getWeeklyLeaderboard() {
+  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+  return getLeaderboardRows({ createdAt: { gte: since } })
+    .then((rows) =>
+      rows
+        .filter((r) => r.total >= 3)
+        .sort((a, b) => b.correct - a.correct || b.accuracy - a.accuracy)
+        .slice(0, 20)
+    )
 }
 
 async function getAllTimeLeaderboard() {
-  const rows = await prisma.prediction.groupBy({
-    by: ['userId'],
-    where: { userId: { not: null } },
-    _count: { id: true },
-    _sum: { isCorrect: true } as never,
-  })
-
-  const userIds = rows.map((r) => r.userId).filter(Boolean) as string[]
-  const users = await prisma.user.findMany({
-    where: { id: { in: userIds } },
-    select: { id: true, name: true, image: true },
-  })
-  const userMap = Object.fromEntries(users.map((u) => [u.id, u]))
-
-  return rows
-    .map((r) => {
-      const total = r._count.id
-      const correct = (r as Record<string, { isCorrect?: number }>)['_sum']?.isCorrect ?? 0
-      const accuracy = total > 0 ? Math.round((Number(correct) / total) * 100) : 0
-      const user = r.userId ? userMap[r.userId] : null
-      return { userId: r.userId, name: user?.name ?? 'Anonymous', image: user?.image, total, correct: Number(correct), accuracy }
-    })
-    .filter((r) => r.total >= 5)
-    .sort((a, b) => b.correct - a.correct || b.accuracy - a.accuracy)
-    .slice(0, 50)
+  return getLeaderboardRows({})
+    .then((rows) =>
+      rows
+        .filter((r) => r.total >= 5)
+        .sort((a, b) => b.correct - a.correct || b.accuracy - a.accuracy)
+        .slice(0, 50)
+    )
 }
 
 function RankBadge({ rank }: { rank: number }) {
