@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/db/client'
-
-const BASE = 'https://v3.football.api-sports.io'
+import { API_SPORTS_BASE_URL } from './api-sports'
 
 interface LiveFixture {
   fixture: {
@@ -38,7 +37,7 @@ export async function pollLiveScores() {
   })
   if (activeCount === 0) return // nothing live — skip API call
 
-  const res = await fetch(`${BASE}/fixtures?live=all`, {
+  const res = await fetch(`${API_SPORTS_BASE_URL}/fixtures?live=all`, {
     headers: { 'x-apisports-key': apiKey },
     next: { revalidate: 0 },
   })

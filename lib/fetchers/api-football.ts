@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/db/client'
-
-const BASE_URL = 'https://v3.football.api-sports.io'
+import { API_SPORTS_BASE_URL } from './api-sports'
 
 // NPFL=332, Super Eagles=Nigeria national team id=6, AFCON=id=6, CAF CL=id=20
 const LEAGUE_MAP: Array<{ leagueId: number; season: number; calendarSlug: string; isTeam?: boolean; teamId?: number }> = [
@@ -41,7 +40,7 @@ async function fetchLeague(leagueId: number, season: number, calendarSlug: strin
   const calendar = await prisma.calendar.findUnique({ where: { slug: calendarSlug } })
   if (!calendar) return
 
-  const url = `${BASE_URL}/fixtures?league=${leagueId}&season=${season}`
+  const url = `${API_SPORTS_BASE_URL}/fixtures?league=${leagueId}&season=${season}`
   const res = await fetch(url, {
     headers: { 'x-apisports-key': apiKey },
     next: { revalidate: 0 },
