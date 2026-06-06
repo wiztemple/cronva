@@ -1,0 +1,66 @@
+[
+  {
+    "externalId": "eid-adha-2026-ng",
+    "title": "Eid al-Adha 2026 (Eid el-Kabir)",
+    "startDatetime": "2026-06-06T07:00:00+01:00",
+    "endDatetime": "2026-06-06T12:00:00+01:00",
+    "description": "Eid al-Adha — Festival of Sacrifice. Public holiday in Nigeria.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "eid-adha-2026-ng-d2",
+    "title": "Eid al-Adha 2026 — Day 2",
+    "startDatetime": "2026-06-07T07:00:00+01:00",
+    "endDatetime": "2026-06-07T12:00:00+01:00",
+    "description": "Eid al-Adha celebrations continue.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "mawlid-2026-ng",
+    "title": "Mawlid an-Nabi 2026 (Prophet's Birthday)",
+    "startDatetime": "2026-09-05T07:00:00+01:00",
+    "endDatetime": "2026-09-05T12:00:00+01:00",
+    "description": "Mawlid an-Nabi — celebration of the birth of Prophet Muhammad (SAW). Public holiday in Nigeria.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "eid-fitr-2027-ng",
+    "title": "Eid al-Fitr 2027 (End of Ramadan)",
+    "startDatetime": "2027-03-20T07:00:00+01:00",
+    "endDatetime": "2027-03-20T12:00:00+01:00",
+    "description": "Eid al-Fitr marks the end of Ramadan. Public holiday in Nigeria.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "eid-fitr-2027-ng-d2",
+    "title": "Eid al-Fitr 2027 — Day 2",
+    "startDatetime": "2027-03-21T07:00:00+01:00",
+    "endDatetime": "2027-03-21T12:00:00+01:00",
+    "description": "Eid al-Fitr celebrations continue.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "eid-adha-2027-ng",
+    "title": "Eid al-Adha 2027 (Eid el-Kabir)",
+    "startDatetime": "2027-05-27T07:00:00+01:00",
+    "endDatetime": "2027-05-27T12:00:00+01:00",
+    "description": "Eid al-Adha — Festival of Sacrifice. Public holiday in Nigeria.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "eid-adha-2027-ng-d2",
+    "title": "Eid al-Adha 2027 — Day 2",
+    "startDatetime": "2027-05-28T07:00:00+01:00",
+    "endDatetime": "2027-05-28T12:00:00+01:00",
+    "description": "Eid al-Adha celebrations continue.",
+    "location": "Nigeria"
+  },
+  {
+    "externalId": "mawlid-2027-ng",
+    "title": "Mawlid an-Nabi 2027 (Prophet's Birthday)",
+    "startDatetime": "2027-08-26T07:00:00+01:00",
+    "endDatetime": "2027-08-26T12:00:00+01:00",
+    "description": "Mawlid an-Nabi — celebration of the birth of Prophet Muhammad (SAW). Public holiday in Nigeria.",
+    "location": "Nigeria"
+  }
+]

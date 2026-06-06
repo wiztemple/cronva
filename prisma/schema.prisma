@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Phase 1 ─────────────────────────────────────────────────────────────────
+
+model Calendar {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug            String    @unique
+  name            String
+  category        String
+  sport           String?
+  description     String?
+  iconUrl         String?   @map("icon_url")
+  country         String    @default("global")
+  isActive        Boolean   @default(true) @map("is_active")
+  isFeatured      Boolean   @default(false) @map("is_featured")
+  subscriberCount Int       @default(0) @map("subscriber_count")
+  lastSyncedAt    DateTime? @map("last_synced_at") @db.Timestamptz(6)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  events            Event[]
+  subscriptions     Subscription[]
+  userSubscriptions UserSubscription[]
+  shares            Share[]
+  partners          Partner[]
+
+  @@map("calendars")
+}
+
+model Event {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  calendarId    String   @map("calendar_id") @db.Uuid
+  externalId    String   @map("external_id")
+  title         String
+  startDatetime DateTime @map("start_datetime") @db.Timestamptz(6)
+  endDatetime   DateTime @map("end_datetime") @db.Timestamptz(6)
+  description   String?
+  location      String?
+  status        String   @default("scheduled")
+  // Live score data (null when not live)
+  liveData      Json?    @map("live_data") // { homeGoals, awayGoals, minute, statusDetail, redCardsHome, redCardsAway }
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  calendar    Calendar     @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  predictions Prediction[]
+
+  @@unique([calendarId, externalId])
+  @@index([calendarId, startDatetime])
+  @@map("events")
+}
+
+model Subscription {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  calendarId String   @map("calendar_id") @db.Uuid
+  token      String   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@map("subscriptions")
+}
+
+// ─── Phase 2 ─────────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String    @unique
+  name          String?
+  emailVerified DateTime? @map("email_verified") @db.Timestamptz(6)
+  image         String?   @map("avatar_url")
+  provider      String    @default("email")
+  isAdmin       Boolean   @default(false) @map("is_admin")
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  waPhone     String? @map("wa_phone")
+  waAlertsOn  Boolean @default(false) @map("wa_alerts_on")
+
+  // Phase 4 additions
+  expoPushToken String? @map("expo_push_token")
+  country       String? // user's preferred country (ng|gh|ke|za)
+
+  accounts          Account[]
+  sessions          Session[]
+  userSubscriptions UserSubscription[]
+  predictions       Prediction[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refreshToken      String? @map("refresh_token") @db.Text
+  accessToken       String? @map("access_token") @db.Text
+  expiresAt         Int?    @map("expires_at")
+  tokenType         String? @map("token_type")
+  scope             String?
+  idToken           String? @map("id_token") @db.Text
+  sessionState      String? @map("session_state")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.Uuid
+  expires      DateTime @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime @db.Timestamptz(6)
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model UserSubscription {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  calendarId   String   @map("calendar_id") @db.Uuid
+  subscribedAt DateTime @default(now()) @map("subscribed_at") @db.Timestamptz(6)
+  waAlert      Boolean  @default(false) @map("wa_alert")
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  calendar Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, calendarId])
+  @@map("user_subscriptions")
+}
+
+model CalendarRequest {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String?
+  calendarName String   @map("calendar_name")
+  description  String?
+  category     String?
+  votes        Int      @default(1)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("calendar_requests")
+}
+
+model Share {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  calendarId String   @map("calendar_id") @db.Uuid
+  platform   String   @default("whatsapp")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@map("shares")
+}
+
+// ─── Phase 3 ─────────────────────────────────────────────────────────────────
+
+model Partner {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  domain     String
+  calendarId String   @map("calendar_id") @db.Uuid
+  embedCount Int      @default(0) @map("embed_count")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@unique([domain, calendarId])
+  @@map("partners")
+}
+
+// ─── Phase 4 ─────────────────────────────────────────────────────────────────
+
+model Prediction {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventId    String   @map("event_id") @db.Uuid
+  userId     String?  @map("user_id") @db.Uuid
+  ipHash     String?  @map("ip_hash")
+  pick       String   // home|draw|away
+  isCorrect  Boolean? @map("is_correct")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  event Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User?  @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+  @@map("predictions")
+}

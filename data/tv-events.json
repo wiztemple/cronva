@@ -1,0 +1,353 @@
+[
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-fantastic-four-2026",
+    "title": "The Fantastic Four: First Steps — Theatrical Release",
+    "startDatetime": "2026-07-25T00:00:00+01:00",
+    "endDatetime": "2026-07-25T23:59:00+01:00",
+    "description": "Marvel's reboot of the Fantastic Four hits cinemas worldwide.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-superman-2026",
+    "title": "Superman — Theatrical Release",
+    "startDatetime": "2026-07-11T00:00:00+01:00",
+    "endDatetime": "2026-07-11T23:59:00+01:00",
+    "description": "James Gunn's Superman launches the new DC cinematic era.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-jurassic-rebirth-2026",
+    "title": "Jurassic World Rebirth — Theatrical Release",
+    "startDatetime": "2026-07-02T00:00:00+01:00",
+    "endDatetime": "2026-07-02T23:59:00+01:00",
+    "description": "A new chapter in the Jurassic franchise.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-smurfs-2026",
+    "title": "Smurfs — Theatrical Release",
+    "startDatetime": "2026-07-18T00:00:00+01:00",
+    "endDatetime": "2026-07-18T23:59:00+01:00",
+    "description": "A live-action/CGI Smurfs family adventure.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-naked-gun-2026",
+    "title": "The Naked Gun — Theatrical Release",
+    "startDatetime": "2026-08-01T00:00:00+01:00",
+    "endDatetime": "2026-08-01T23:59:00+01:00",
+    "description": "Liam Neeson stars in the reboot of the classic comedy franchise.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-weapons-2026",
+    "title": "Weapons — Theatrical Release",
+    "startDatetime": "2026-08-08T00:00:00+01:00",
+    "endDatetime": "2026-08-08T23:59:00+01:00",
+    "description": "Horror thriller from Zach Cregger (Barbarian).",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-freakier-friday-2026",
+    "title": "Freakier Friday — Theatrical Release",
+    "startDatetime": "2026-08-08T00:00:00+01:00",
+    "endDatetime": "2026-08-08T23:59:00+01:00",
+    "description": "Jamie Lee Curtis and Lindsay Lohan return for the body-swap sequel.",
+    "location": "Cinemas"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-netflix-kpop-demon-2026",
+    "title": "KPop Demon Hunters — Netflix Premiere",
+    "startDatetime": "2026-06-20T08:00:00+01:00",
+    "endDatetime": "2026-06-20T23:59:00+01:00",
+    "description": "Animated musical action film streaming exclusively on Netflix.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-netflix-squid-game-s3-2026",
+    "title": "Squid Game: The Final Games — Netflix Premiere",
+    "startDatetime": "2026-06-27T08:00:00+01:00",
+    "endDatetime": "2026-06-27T23:59:00+01:00",
+    "description": "The final season of Netflix's global phenomenon.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "upcoming-movies",
+    "externalId": "movie-nollywood-lisabi-2026",
+    "title": "Lisabi: The Uprising — Nollywood Premiere",
+    "startDatetime": "2026-06-13T19:00:00+01:00",
+    "endDatetime": "2026-06-13T22:00:00+01:00",
+    "description": "Epic historical drama starring Adekunle Gold and Odunlade Adekola.",
+    "location": "Cinemas, Nigeria"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-house-of-dragon-s3e01",
+    "title": "House of the Dragon — S3E1",
+    "startDatetime": "2026-06-15T21:00:00+01:00",
+    "endDatetime": "2026-06-15T22:30:00+01:00",
+    "description": "Season 3 premiere on HBO Max.",
+    "location": "HBO Max"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-house-of-dragon-s3e02",
+    "title": "House of the Dragon — S3E2",
+    "startDatetime": "2026-06-22T21:00:00+01:00",
+    "endDatetime": "2026-06-22T22:30:00+01:00",
+    "description": "Weekly episode on HBO Max.",
+    "location": "HBO Max"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e01",
+    "title": "Silo — S3E1",
+    "startDatetime": "2026-07-03T08:00:00+01:00",
+    "endDatetime": "2026-07-03T09:00:00+01:00",
+    "description": "Season 3 premiere. Juliette Nichols returns as the silo recovers from rebellion and faces a new threat. Origin-story arc explores how the world ended centuries earlier. Seasons 3 & 4 renewed.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e02",
+    "title": "Silo — S3E2",
+    "startDatetime": "2026-07-10T08:00:00+01:00",
+    "endDatetime": "2026-07-10T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e03",
+    "title": "Silo — S3E3",
+    "startDatetime": "2026-07-17T08:00:00+01:00",
+    "endDatetime": "2026-07-17T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e04",
+    "title": "Silo — S3E4",
+    "startDatetime": "2026-07-24T08:00:00+01:00",
+    "endDatetime": "2026-07-24T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e05",
+    "title": "Silo — S3E5",
+    "startDatetime": "2026-07-31T08:00:00+01:00",
+    "endDatetime": "2026-07-31T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e06",
+    "title": "Silo — S3E6",
+    "startDatetime": "2026-08-07T08:00:00+01:00",
+    "endDatetime": "2026-08-07T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e07",
+    "title": "Silo — S3E7",
+    "startDatetime": "2026-08-14T08:00:00+01:00",
+    "endDatetime": "2026-08-14T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e08",
+    "title": "Silo — S3E8",
+    "startDatetime": "2026-08-21T08:00:00+01:00",
+    "endDatetime": "2026-08-21T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e09",
+    "title": "Silo — S3E9",
+    "startDatetime": "2026-08-28T08:00:00+01:00",
+    "endDatetime": "2026-08-28T09:00:00+01:00",
+    "description": "Weekly episode — new episodes every Friday.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-silo-s3e10",
+    "title": "Silo — S3E10 (Season Finale)",
+    "startDatetime": "2026-09-04T08:00:00+01:00",
+    "endDatetime": "2026-09-04T09:00:00+01:00",
+    "description": "Season 3 finale. 10-episode season concludes — Season 4 already renewed.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-silo-s3-premiere",
+    "title": "Silo — Season 3 Premiere",
+    "startDatetime": "2026-07-03T08:00:00+01:00",
+    "endDatetime": "2026-07-03T09:00:00+01:00",
+    "description": "Rebecca Ferguson returns as Juliette Nichols. 10 episodes drop weekly on Fridays through 4 September. Seasons 3 & 4 renewed by Apple TV+.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-the-bear-s4e01",
+    "title": "The Bear — S4E1",
+    "startDatetime": "2026-06-25T08:00:00+01:00",
+    "endDatetime": "2026-06-25T09:00:00+01:00",
+    "description": "Season 4 drops on Disney+ / Hulu.",
+    "location": "Disney+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-andor-s2e12",
+    "title": "Andor — S2 Finale",
+    "startDatetime": "2026-06-24T08:00:00+01:00",
+    "endDatetime": "2026-06-24T09:30:00+01:00",
+    "description": "Series finale of the Star Wars prequel series.",
+    "location": "Disney+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-slow-horses-s5e01",
+    "title": "Slow Horses — S5E1",
+    "startDatetime": "2026-09-17T08:00:00+01:00",
+    "endDatetime": "2026-09-17T09:00:00+01:00",
+    "description": "Gary Oldman returns as Jackson Lamb. Apple TV+.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-black-mirror-s7e01",
+    "title": "Black Mirror — S7E1",
+    "startDatetime": "2026-06-10T08:00:00+01:00",
+    "endDatetime": "2026-06-10T09:00:00+01:00",
+    "description": "New season premiere on Netflix.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-black-mirror-s7e02",
+    "title": "Black Mirror — S7E2",
+    "startDatetime": "2026-06-10T08:00:00+01:00",
+    "endDatetime": "2026-06-10T09:00:00+01:00",
+    "description": "Full season drops at once on Netflix.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-shogun-s2e01",
+    "title": "Shōgun — S2E1 (Season Premiere)",
+    "startDatetime": "2026-08-20T08:00:00+01:00",
+    "endDatetime": "2026-08-20T09:30:00+01:00",
+    "description": "Season 2 of the Emmy-winning historical drama on FX / Hulu.",
+    "location": "FX / Hulu"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-wednesday-s2e01",
+    "title": "Wednesday — S2E1",
+    "startDatetime": "2026-08-06T08:00:00+01:00",
+    "endDatetime": "2026-08-06T09:00:00+01:00",
+    "description": "Wednesday Addams returns for a new semester on Netflix.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-big-brother-us-s27e01",
+    "title": "Big Brother (US) — S27 Premiere",
+    "startDatetime": "2026-07-09T02:00:00+01:00",
+    "endDatetime": "2026-07-09T04:00:00+01:00",
+    "description": "Summer reality TV staple returns on CBS / Paramount+.",
+    "location": "CBS / Paramount+"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-gen-v-s2e01",
+    "title": "Gen V — S2E1",
+    "startDatetime": "2026-09-17T08:00:00+01:00",
+    "endDatetime": "2026-09-17T09:00:00+01:00",
+    "description": "The Boys spin-off returns on Prime Video.",
+    "location": "Prime Video"
+  },
+  {
+    "calendarSlug": "tv-episodes",
+    "externalId": "tv-showmax-shaka-ilembe-s3e01",
+    "title": "Shaka iLembe — S3E1",
+    "startDatetime": "2026-06-28T20:00:00+02:00",
+    "endDatetime": "2026-06-28T21:30:00+02:00",
+    "description": "South African historical drama season premiere on Showmax.",
+    "location": "Showmax"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-ironheart-s1e01",
+    "title": "Ironheart — Series Premiere",
+    "startDatetime": "2026-06-24T08:00:00+01:00",
+    "endDatetime": "2026-06-24T09:00:00+01:00",
+    "description": "Marvel series following Riri Williams. Disney+.",
+    "location": "Disney+"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-daredevil-born-again-s1e01",
+    "title": "Daredevil: Born Again — Series Premiere",
+    "startDatetime": "2026-03-25T08:00:00+01:00",
+    "endDatetime": "2026-03-25T09:00:00+01:00",
+    "description": "Charlie Cox returns as Matt Murdock on Disney+.",
+    "location": "Disney+"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-adolescence-netflix",
+    "title": "Adolescence — Limited Series Premiere",
+    "startDatetime": "2026-03-13T08:00:00+01:00",
+    "endDatetime": "2026-03-13T09:00:00+01:00",
+    "description": "One-take-per-episode crime drama. Netflix.",
+    "location": "Netflix"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-the-last-of-us-s2e01",
+    "title": "The Last of Us — S2 Premiere",
+    "startDatetime": "2026-04-13T02:00:00+01:00",
+    "endDatetime": "2026-04-13T03:30:00+01:00",
+    "description": "Season 2 adapts Part II of the game. HBO Max.",
+    "location": "HBO Max"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-severance-s2e01",
+    "title": "Severance — S2 Premiere",
+    "startDatetime": "2026-01-17T08:00:00+01:00",
+    "endDatetime": "2026-01-17T09:00:00+01:00",
+    "description": "The office thriller returns on Apple TV+.",
+    "location": "Apple TV+"
+  },
+  {
+    "calendarSlug": "new-series",
+    "externalId": "series-blood-of-zeus-s3",
+    "title": "Blood of Zeus — S3 Premiere",
+    "startDatetime": "2026-05-08T08:00:00+01:00",
+    "endDatetime": "2026-05-08T09:00:00+01:00",
+    "description": "Animated Greek mythology series returns on Netflix.",
+    "location": "Netflix"
+  }
+]

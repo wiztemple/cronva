@@ -1,0 +1,92 @@
+[
+  {
+    "calendarSlug": "bbnnaija",
+    "externalId": "bbn-s9-launch-2025",
+    "title": "BBNaija Season 9 — Launch Night",
+    "startDatetime": "2025-07-26T19:00:00+01:00",
+    "endDatetime": "2025-07-26T23:00:00+01:00",
+    "description": "The opening night of Big Brother Naija Season 9. Housemates enter the house live on Africa Magic.",
+    "location": "Africa Magic, DStv"
+  },
+  {
+    "calendarSlug": "bbnnaija",
+    "externalId": "bbn-s9-eviction-1",
+    "title": "BBNaija — First Eviction Night",
+    "startDatetime": "2025-08-10T19:00:00+01:00",
+    "endDatetime": "2025-08-10T21:00:00+01:00",
+    "description": "The first eviction of the season. Find out who leaves the house tonight.",
+    "location": "Africa Magic, DStv"
+  },
+  {
+    "calendarSlug": "bbnnaija",
+    "externalId": "bbn-s9-finale-2025",
+    "title": "BBNaija Season 9 — Grand Finale",
+    "startDatetime": "2025-10-05T19:00:00+01:00",
+    "endDatetime": "2025-10-05T23:59:00+01:00",
+    "description": "The grand finale of Big Brother Naija Season 9. The winner is crowned live.",
+    "location": "Eko Hotel & Suites, Lagos"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "burna-boy-tour-london-2025",
+    "title": "Burna Boy — Spaceship World Tour: London",
+    "startDatetime": "2025-08-22T20:00:00+01:00",
+    "endDatetime": "2025-08-22T23:30:00+01:00",
+    "description": "Burna Boy brings the Spaceship World Tour to London's O2 Arena.",
+    "location": "The O2 Arena, London, UK"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "wizkid-tour-lagos-2025",
+    "title": "Wizkid — Lagos Concert",
+    "startDatetime": "2025-12-27T20:00:00+01:00",
+    "endDatetime": "2025-12-28T02:00:00+01:00",
+    "description": "Wizkid's annual December Lagos concert — the biggest Afrobeats night of the year.",
+    "location": "Eko Atlantic City, Lagos, Nigeria"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "davido-tour-abuja-2025",
+    "title": "Davido — 30 Billion Concert: Abuja",
+    "startDatetime": "2025-11-15T20:00:00+01:00",
+    "endDatetime": "2025-11-15T23:30:00+01:00",
+    "description": "Davido performs live at the National Stadium Abuja as part of his 30 Billion World Tour.",
+    "location": "National Stadium, Abuja, Nigeria"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "afronation-ghana-2026",
+    "title": "Afro Nation Ghana 2026",
+    "startDatetime": "2026-07-03T16:00:00+00:00",
+    "endDatetime": "2026-07-05T03:00:00+00:00",
+    "description": "The world's biggest Afrobeats festival returns to Accra Beach, Ghana.",
+    "location": "Labadi Beach, Accra, Ghana"
+  },
+  {
+    "calendarSlug": "bbnnaija",
+    "externalId": "bbn-s9-hoh-week4",
+    "title": "BBNaija — Head of House Challenge Week 4",
+    "startDatetime": "2025-08-18T19:00:00+01:00",
+    "endDatetime": "2025-08-18T20:30:00+01:00",
+    "description": "Weekly Head of House challenge determines immunity and nominations.",
+    "location": "Africa Magic, DStv"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "rema-tour-usa-nyc-2025",
+    "title": "Rema — Calm Down World Tour: New York",
+    "startDatetime": "2025-09-18T20:00:00-04:00",
+    "endDatetime": "2025-09-18T23:00:00-04:00",
+    "description": "Rema performs at Madison Square Garden as part of the Calm Down World Tour.",
+    "location": "Madison Square Garden, New York, USA"
+  },
+  {
+    "calendarSlug": "afrobeats-tours",
+    "externalId": "asake-tour-uk-manchester-2025",
+    "title": "Asake — Work of Art Tour: Manchester",
+    "startDatetime": "2025-10-11T19:30:00+01:00",
+    "endDatetime": "2025-10-11T22:30:00+01:00",
+    "description": "Asake performs at Manchester Arena on the Work of Art World Tour.",
+    "location": "Co-op Live, Manchester, UK"
+  }
+]
