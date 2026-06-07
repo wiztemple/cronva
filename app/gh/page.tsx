@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/db/client'
-import { CalendarGrid } from '@/components/CalendarGrid'
 import { CalendarCard } from '@/components/CalendarCard'
 import { CountryEditionBanner } from '@/components/CountryEditionBanner'
+import { mapPrismaToCardProps } from '@/lib/map-calendar-card'
 import Link from 'next/link'
 
 export const revalidate = 3600
@@ -42,16 +42,7 @@ async function getData() {
 
 export default async function GhanaPage() {
   const { ghCalendars, globalCalendars } = await getData()
-  const all = [...ghCalendars, ...globalCalendars].map((c) => ({
-    slug: c.slug,
-    name: c.name,
-    category: c.category,
-    subscriberCount: c.subscriberCount,
-    isFeatured: c.isFeatured,
-    nextEventTitle: c.events[0]?.title ?? null,
-    nextEventDate: c.events[0]?.startDatetime ?? null,
-    secondEventDate: c.events[1]?.startDatetime ?? null,
-  }))
+  const all = [...ghCalendars, ...globalCalendars]
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
@@ -79,15 +70,7 @@ export default async function GhanaPage() {
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
             {ghCalendars.map((cal) => (
-              <CalendarCard
-                key={cal.slug}
-                slug={cal.slug}
-                name={cal.name}
-                category={cal.category}
-                subscriberCount={cal.subscriberCount}
-                nextEventTitle={cal.events[0]?.title ?? null}
-                nextEventDate={cal.events[0]?.startDatetime ?? null}
-              />
+              <CalendarCard key={cal.slug} {...mapPrismaToCardProps(cal)} />
             ))}
           </div>
         </section>
@@ -95,7 +78,14 @@ export default async function GhanaPage() {
 
       {/* All calendars with tabs */}
       <section id="calendars" style={{ marginBottom: 80 }}>
-        <CalendarGrid calendars={all} title="All calendars" showTabs />
+        <h2 style={{ fontWeight: 500, fontSize: 20, letterSpacing: '-0.2px', color: 'var(--color-navy)', marginBottom: 20 }}>
+          All calendars
+        </h2>
+        <div className="calendar-grid">
+          {all.map((cal) => (
+            <CalendarCard key={cal.slug} {...mapPrismaToCardProps(cal)} />
+          ))}
+        </div>
       </section>
     </div>
   )

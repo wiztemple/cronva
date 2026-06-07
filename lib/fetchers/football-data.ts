@@ -110,6 +110,14 @@ async function fetchCompetition(code: string, calendarSlug: string) {
 }
 
 export class FootballDataFetcher {
+  async syncCompetition(code: string, calendarSlug: string) {
+    await fetchCompetition(code, calendarSlug)
+  }
+
+  async syncWorldCup() {
+    await fetchCompetition('WC', 'world-cup-2026')
+  }
+
   async syncAll() {
     for (const [code, slug] of Object.entries(COMPETITION_MAP)) {
       try {

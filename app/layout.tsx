@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
-import { Nav } from '@/components/Nav'
 import { Providers } from '@/components/Providers'
+import { MobileTabBar } from '@/components/MobileTabBar'
 
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -22,34 +29,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
         <Providers>
-          <Nav />
-          <main>{children}</main>
-          <footer
-            style={{
-              borderTop: '1px solid rgba(26,63,111,0.1)',
-              padding: '32px 24px',
-              marginTop: 80,
-              textAlign: 'center',
-            }}
-          >
-            <p style={{ fontSize: '13px', color: 'var(--color-fog)' }}>
-              © {new Date().getFullYear()} Cronva · Time, delivered. ·{' '}
-              <a href="/about" style={{ color: 'var(--color-fog)', textDecoration: 'underline' }}>
-                About
-              </a>
-              {' · '}
-              <a href="/trending" style={{ color: 'var(--color-fog)', textDecoration: 'underline' }}>
-                Trending
-              </a>
-              {' · '}
-              <a href="/request" style={{ color: 'var(--color-fog)', textDecoration: 'underline' }}>
-                Request a calendar
-              </a>
-            </p>
-          </footer>
+          {children}
+          <MobileTabBar />
         </Providers>
       </body>
     </html>

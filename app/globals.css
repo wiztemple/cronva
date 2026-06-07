@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
 @import "tailwindcss";
 
 /* ─── Cronva design tokens ─── */
@@ -8,12 +7,13 @@
   --color-blue:     #4A9FE8;
   --color-gold:     #F5C400;
   --color-sky:      #E6F1FB;
-  --color-offwhite: #F1EFE8;
+  --color-offwhite: #F7F6F3;
   --color-fog:      #8A8F98;
+  --color-border:   #EBEBEB;
   --color-snow:     #F7F8F8;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', ui-monospace, monospace;
 }
 
 @theme inline {
@@ -24,12 +24,12 @@
   --color-sky:      var(--color-sky);
   --color-offwhite: var(--color-offwhite);
   --color-fog:      var(--color-fog);
+  --color-border:   var(--color-border);
   --color-snow:     var(--color-snow);
   --font-sans:      var(--font-sans);
   --font-mono:      var(--font-mono);
 }
 
-/* ─── Base ─── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -43,32 +43,37 @@ body {
   background-color: var(--color-offwhite);
   color: var(--color-navy);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.7;
   min-height: 100vh;
 }
 
-/* ─── Typography helpers ─── */
-.text-display {
-  font-size: clamp(36px, 6vw, 64px);
+/* Typography */
+.text-display-hero {
+  font-size: 52px;
   font-weight: 400;
-  letter-spacing: -0.96px;
-  line-height: 1.05;
+  letter-spacing: -1.4px;
+  line-height: 1;
 }
 
 .text-heading {
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.384px;
-  line-height: 1.2;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.05;
 }
 
 .text-subheading {
   font-size: 20px;
   font-weight: 500;
-  letter-spacing: -0.2px;
-  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.text-body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 .text-label {
@@ -78,173 +83,118 @@ body {
 }
 
 .text-badge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
-/* ─── Calendar card ─── */
-.cal-card {
-  background: #ffffff;
-  border: 0.5px solid rgba(26, 63, 111, 0.15);
+.text-section-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-fog);
+}
+
+/* Hero split */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 380px;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+@media (max-width: 767px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+  }
+
+  .text-display-hero {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 479px) {
+  .text-display-hero {
+    font-size: 28px;
+  }
+}
+
+/* Calendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
-  padding: 20px 24px;
-  transition: border-color 160ms ease, background-color 160ms ease;
-  cursor: pointer;
+  overflow: hidden;
 }
 
-.cal-card:hover {
-  border-color: rgba(26, 63, 111, 0.4);
-  background-color: var(--color-offwhite);
+@media (max-width: 767px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-/* ─── LIVE badge animation — CSS only, no JS ─── */
-@keyframes cronva-live-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.55; }
+@media (max-width: 479px) {
+  .calendar-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-.badge-live-animated {
-  animation: cronva-live-pulse 1.8s ease-in-out infinite;
+/* Page container */
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-/* ─── Badges ─── */
-.badge-category {
-  display: inline-block;
-  background: var(--color-sky);
-  color: var(--color-navy);
-  border-radius: 2px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 2px 6px;
+/* Mobile bottom padding for tab bar */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 56px;
+  }
 }
 
-.badge-live {
-  display: inline-block;
-  background: var(--color-gold);
-  color: #412402;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 3px 10px;
+/* Fade filter transition */
+.calendar-card-fade {
+  transition: opacity 200ms ease;
 }
 
-/* ─── Buttons ─── */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-blue);
-  color: var(--color-snow);
-  font-weight: 500;
-  font-size: 14px;
-  padding: 8px 20px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 160ms ease;
-  white-space: nowrap;
+.calendar-card-fade.hidden-card {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
-.btn-primary:hover {
-  opacity: 0.88;
+/* Horizontal scroll rows — hide scrollbar across all browsers */
+.scroll-row {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge */
+}
+.scroll-row::-webkit-scrollbar {
+  display: none;                /* Chrome/Safari */
 }
 
-.btn-subscribe {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1px solid var(--color-blue);
-  background: transparent;
-  color: var(--color-blue);
-  font-weight: 500;
-  font-size: 14px;
-  padding: 10px 24px;
-  border-radius: 9999px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 160ms ease;
-  white-space: nowrap;
-}
-
-.btn-subscribe:hover {
-  background-color: var(--color-sky);
-}
-
-/* ─── Status dots ─── */
-.status-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-dot-upcoming  { background: var(--color-blue); }
-.status-dot-live      { background: var(--color-gold); }
-.status-dot-tbd       { background: var(--color-fog); }
-.status-dot-cancelled { background: #EB5757; }
-
-/* ─── Nav ─── */
-.nav {
-  height: 56px;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(26, 63, 111, 0.08);
-  padding: 0 24px;
+/* Nav responsive */
+.nav-links-desktop {
   display: flex;
+  gap: 4px;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 50;
 }
 
-/* ─── Category tabs ─── */
-.category-tab {
-  padding: 6px 16px;
-  border-radius: 9999px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-fog);
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: color 160ms ease, background-color 160ms ease;
-  white-space: nowrap;
+.nav-menu-mobile {
+  display: none;
 }
 
-.category-tab:hover {
-  color: var(--color-navy);
-}
+@media (max-width: 767px) {
+  .nav-links-desktop {
+    display: none;
+  }
 
-.category-tab.active {
-  background: var(--color-navy);
-  color: var(--color-snow);
-}
+  .nav-menu-mobile {
+    display: block;
+  }
 
-/* ─── Search input ─── */
-.search-input {
-  width: 100%;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid rgba(26, 63, 111, 0.2);
-  background: #ffffff;
-  font-size: 14px;
-  color: var(--color-navy);
-  outline: none;
-  transition: border-color 160ms ease;
-}
-
-.search-input:focus {
-  border-color: var(--color-blue);
-}
-
-.search-input::placeholder {
-  color: var(--color-fog);
+  .nav-sign-in-label {
+    display: none;
+  }
 }

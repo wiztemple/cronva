@@ -11,7 +11,7 @@ const calendars = [
     description: 'All 380 Premier League fixtures, results and standings for the current season.',
     country: 'england',
     isFeatured: true,
-    iconUrl: null,
+    iconUrl: '/brand/Premier_League_Logo_Alternative_0.svg',
   },
   {
     slug: 'champions-league',
@@ -41,7 +41,7 @@ const calendars = [
     description: 'Every match of the 2026 FIFA World Cup hosted across USA, Canada, and Mexico.',
     country: 'global',
     isFeatured: true,
-    iconUrl: null,
+    iconUrl: '/brand/fifa26.svg',
   },
   {
     slug: 'euro',
@@ -61,7 +61,7 @@ const calendars = [
     description: "Germany's top-flight football league, home of Bayern Munich and Borussia Dortmund.",
     country: 'germany',
     isFeatured: false,
-    iconUrl: null,
+    iconUrl: '/brand/bundesliga.jpeg',
   },
   {
     slug: 'serie-a',
@@ -111,7 +111,7 @@ const calendars = [
     description: 'Every F1 session — practice, qualifying, sprint, and race — for the full season.',
     country: 'global',
     isFeatured: true,
-    iconUrl: null,
+    iconUrl: '/brand/Formula_1_Logo_0.svg',
   },
   {
     slug: 'nba',
@@ -121,7 +121,7 @@ const calendars = [
     description: 'NBA regular season, playoffs, and Finals fixtures for all 30 teams.',
     country: 'global',
     isFeatured: true,
-    iconUrl: null,
+    iconUrl: '/brand/NBA_id-njA-Hob_0.svg',
   },
   {
     slug: 'tennis-grand-slams',

@@ -1,18 +1,13 @@
+/**
+ * Sync FIFA World Cup 2026 fixtures from football-data.org (official schedule).
+ * Removes stale local wc2026-* events from the old JSON seed.
+ *
+ * Requires FOOTBALL_DATA_API_KEY in .env.local
+ */
 import { PrismaClient } from '@prisma/client'
-import fixtures from '../data/wc2026-fixtures.json'
+import { FootballDataFetcher } from '../lib/fetchers/football-data'
 
 const prisma = new PrismaClient()
-
-interface Fixture {
-  matchday: string
-  date: string
-  time: string
-  tz: string
-  home: string
-  away: string
-  venue: string
-  city: string
-}
 
 async function main() {
   const calendar = await prisma.calendar.findUnique({ where: { slug: 'world-cup-2026' } })
@@ -21,44 +16,35 @@ async function main() {
     process.exit(1)
   }
 
-  let upserted = 0
-  for (const fix of fixtures as Fixture[]) {
-    const dateStr = `${fix.date}T${fix.time}:00${fix.tz}`
-    const start = new Date(dateStr)
-    // Football match: 90min + 15min buffer = 105min
-    const end = new Date(start.getTime() + 105 * 60 * 1000)
-
-    const title =
-      fix.home === 'TBD' || fix.away === 'TBD'
-        ? `FIFA World Cup 2026 — ${fix.matchday}`
-        : `${fix.home} vs ${fix.away}`
-
-    const externalId = `wc2026-${fix.date}-${fix.home.replace(/[^a-z]/gi, '')}-${fix.away.replace(/[^a-z]/gi, '')}`.toLowerCase()
-
-    await prisma.event.upsert({
-      where: { calendarId_externalId: { calendarId: calendar.id, externalId } },
-      update: { title, startDatetime: start, endDatetime: end, location: `${fix.venue}, ${fix.city}`, description: fix.matchday },
-      create: {
-        calendarId: calendar.id,
-        externalId,
-        title,
-        startDatetime: start,
-        endDatetime: end,
-        location: `${fix.venue}, ${fix.city}`,
-        description: fix.matchday,
-        status: 'scheduled',
-      },
-    })
-    upserted++
-    console.log(`  ✓ ${title} — ${fix.date}`)
+  const removed = await prisma.event.deleteMany({
+    where: {
+      calendarId: calendar.id,
+      externalId: { startsWith: 'wc2026-' },
+    },
+  })
+  if (removed.count > 0) {
+    console.log(`Removed ${removed.count} outdated local WC fixtures`)
   }
 
-  await prisma.calendar.update({
-    where: { id: calendar.id },
-    data: { lastSyncedAt: new Date() },
+  if (!process.env.FOOTBALL_DATA_API_KEY) {
+    console.error('FOOTBALL_DATA_API_KEY is required — add it to .env.local')
+    process.exit(1)
+  }
+
+  console.log('Syncing World Cup 2026 from football-data.org…')
+  await new FootballDataFetcher().syncWorldCup()
+
+  const count = await prisma.event.count({ where: { calendarId: calendar.id } })
+  const opener = await prisma.event.findFirst({
+    where: { calendarId: calendar.id },
+    orderBy: { startDatetime: 'asc' },
+    select: { title: true, startDatetime: true },
   })
 
-  console.log(`\n${upserted} WC 2026 fixtures seeded.`)
+  console.log(`\n${count} World Cup 2026 fixtures synced.`)
+  if (opener) {
+    console.log(`Opener: ${opener.title} — ${opener.startDatetime.toISOString()}`)
+  }
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect())
