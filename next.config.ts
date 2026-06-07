@@ -1,7 +1,11 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['@prisma/client', 'node-cron'],
+  serverExternalPackages: ['@prisma/client', 'prisma', 'node-cron'],
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/.prisma/client/**/*'],
+    '/api/**/*': ['./node_modules/.prisma/client/**/*'],
+  },
   async headers() {
     return [
       {

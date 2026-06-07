@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npx prisma generate && npm run build"
 
 [build.environment]
   # Public API host — hardcoded in server fetchers, not a secret
