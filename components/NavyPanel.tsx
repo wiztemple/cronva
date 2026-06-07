@@ -37,15 +37,20 @@ export function NavyPanel({
     <div
       className="navy-panel"
       style={{
-        background: 'var(--color-navy)',
+        background: 'linear-gradient(145deg, #1A3F6F 0%, #0D1B2E 55%, #122a4a 100%)',
         padding: '48px 36px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         minHeight: variant === 'home' ? 380 : undefined,
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <div>
+      <div className="hero-orb hero-orb-1" aria-hidden />
+      <div className="hero-orb hero-orb-2" aria-hidden />
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
         {backHref && (
           <Link
             href={backHref}
@@ -102,16 +107,18 @@ export function NavyPanel({
 
         {searchPlaceholder && onSearchChange && (
           <div
+            className="hero-search"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 9,
-              background: 'rgba(255,255,255,0.08)',
-              border: '0.5px solid rgba(255,255,255,0.13)',
-              borderRadius: 8,
+              background: 'rgba(255,255,255,0.10)',
+              border: '0.5px solid rgba(255,255,255,0.18)',
+              borderRadius: 10,
               padding: '11px 16px',
               maxWidth: 340,
               marginTop: 24,
+              transition: 'border-color 150ms ease, box-shadow 150ms ease, background 150ms ease',
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -133,10 +140,16 @@ export function NavyPanel({
                 fontFamily: 'inherit',
               }}
               onFocus={(e) => {
-                e.currentTarget.parentElement!.style.borderColor = 'rgba(255,255,255,0.4)'
+                const el = e.currentTarget.parentElement!
+                el.style.borderColor = 'rgba(74, 159, 232, 0.6)'
+                el.style.boxShadow = '0 0 0 3px rgba(74, 159, 232, 0.15)'
+                el.style.background = 'rgba(255,255,255,0.14)'
               }}
               onBlur={(e) => {
-                e.currentTarget.parentElement!.style.borderColor = 'rgba(255,255,255,0.13)'
+                const el = e.currentTarget.parentElement!
+                el.style.borderColor = 'rgba(255,255,255,0.18)'
+                el.style.boxShadow = 'none'
+                el.style.background = 'rgba(255,255,255,0.10)'
               }}
             />
             <style>{`
@@ -149,20 +162,31 @@ export function NavyPanel({
       {stats && stats.length > 0 && (
         <div
           style={{
-            borderTop: '0.5px solid rgba(255,255,255,0.1)',
+            borderTop: '0.5px solid rgba(255,255,255,0.12)',
             paddingTop: 20,
             marginTop: 32,
             display: 'flex',
             gap: 28,
             flexWrap: 'wrap',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <div key={stat.label}>
-              <p style={{ fontSize: 22, fontWeight: 500, color: '#fff', letterSpacing: '-0.5px', marginBottom: 4 }}>
+              <p
+                style={{
+                  fontSize: 22,
+                  fontWeight: 600,
+                  color: i === 0 ? 'var(--color-gold)' : '#fff',
+                  letterSpacing: '-0.5px',
+                  marginBottom: 4,
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
                 {stat.value}
               </p>
-              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.32)' }}>{stat.label}</p>
+              <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.38)' }}>{stat.label}</p>
             </div>
           ))}
         </div>

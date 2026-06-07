@@ -24,8 +24,11 @@ export function NavBar({ authenticated = false, userName, userImage }: NavBarPro
     <header
       style={{
         height: 56,
-        background: '#fff',
-        borderBottom: '0.5px solid var(--color-border)',
+        background: 'rgba(255, 255, 255, 0.88)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '0.5px solid rgba(26, 63, 111, 0.08)',
+        boxShadow: '0 1px 12px rgba(26, 63, 111, 0.04)',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -115,23 +118,11 @@ export function NavBar({ authenticated = false, userName, userImage }: NavBarPro
           ) : (
             <Link
               href="/login"
+              className="btn-primary"
               style={{
                 fontSize: 13,
-                fontWeight: 500,
-                color: 'var(--color-navy)',
-                border: '0.5px solid var(--color-navy)',
                 padding: '6px 16px',
-                borderRadius: 6,
-                textDecoration: 'none',
-                transition: 'background 120ms, color 120ms',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--color-navy)'
-                e.currentTarget.style.color = '#fff'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = 'var(--color-navy)'
+                boxShadow: '0 2px 8px rgba(74, 159, 232, 0.25)',
               }}
             >
               Sign in

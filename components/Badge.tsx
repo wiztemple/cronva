@@ -15,9 +15,11 @@ interface BadgeProps {
 
 export function Badge({ variant, label }: BadgeProps) {
   const style = VARIANT_STYLES[variant]
+  const extraClass =
+    variant === 'hot' ? ' badge-hot-pulse' : variant === 'live' ? ' live-pulse' : ''
   return (
     <span
-      className="text-badge"
+      className={`text-badge${extraClass}`}
       style={{
         display: 'inline-block',
         background: style.bg,

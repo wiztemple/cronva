@@ -155,28 +155,14 @@ export function HomePageClient({
       />
 
       {/* Section 2: Countdown Heroes */}
-      <section
-        style={{
-          borderBottom: '0.5px solid var(--color-border)',
-          padding: '48px 0',
-        }}
-      >
+      <section className="section-surface-alt" style={{ padding: '48px 0' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ padding: '0 32px', marginBottom: 20 }}>
-            <h2
-              style={{
-                fontSize: 20,
-                fontWeight: 500,
-                color: 'var(--color-navy)',
-                marginBottom: 6,
-                letterSpacing: '-0.3px',
-              }}
-            >
-              🔔 Events you don&apos;t want to miss
-            </h2>
-            <p style={{ fontSize: 13, color: 'var(--color-fog)' }}>
-              Sync once. Your calendar counts down automatically.
-            </p>
+          <div className="section-header fade-up" style={{ padding: '0 32px' }}>
+            <span className="section-header-icon" aria-hidden>🔔</span>
+            <div>
+              <h2 className="section-header-title">Events you don&apos;t want to miss</h2>
+              <p className="section-header-sub">Sync once. Your calendar counts down automatically.</p>
+            </div>
           </div>
 
           <div
@@ -189,36 +175,28 @@ export function HomePageClient({
               padding: '0 32px 4px',
             }}
           >
-            {countdownHighlights.map((event) => (
-              <CountdownCard key={event.slug} event={event} />
+            {countdownHighlights.map((event, i) => (
+              <div
+                key={event.slug}
+                className={`fade-up fade-up-delay-${Math.min(i + 1, 4)}`}
+                style={{ flexShrink: 0 }}
+              >
+                <CountdownCard event={event} />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Section 3: Hot Now */}
-      <section
-        style={{
-          borderBottom: '0.5px solid var(--color-border)',
-          padding: '48px 0',
-        }}
-      >
+      <section className="section-surface" style={{ padding: '48px 0' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ padding: '0 32px', marginBottom: 20 }}>
-            <h2
-              style={{
-                fontSize: 20,
-                fontWeight: 500,
-                color: 'var(--color-navy)',
-                marginBottom: 6,
-                letterSpacing: '-0.3px',
-              }}
-            >
-              🔥 Hot now
-            </h2>
-            <p style={{ fontSize: 13, color: 'var(--color-fog)' }}>
-              The calendars everyone is syncing this week.
-            </p>
+          <div className="section-header fade-up" style={{ padding: '0 32px' }}>
+            <span className="section-header-icon" aria-hidden>🔥</span>
+            <div>
+              <h2 className="section-header-title">Hot now</h2>
+              <p className="section-header-sub">The calendars everyone is syncing this week.</p>
+            </div>
           </div>
 
           <div
@@ -232,8 +210,14 @@ export function HomePageClient({
             }}
           >
             {hotNowCards.length > 0 ? (
-              hotNowCards.map((card) => (
-                <HotCard key={card.slug} {...card} onSync={showToast} />
+              hotNowCards.map((card, i) => (
+                <div
+                  key={card.slug}
+                  className={`fade-up fade-up-delay-${Math.min(i + 1, 4)}`}
+                  style={{ flexShrink: 0 }}
+                >
+                  <HotCard {...card} onSync={showToast} />
+                </div>
               ))
             ) : (
               <p style={{ fontSize: 13, color: 'var(--color-fog)', padding: '0 32px' }}>
@@ -257,12 +241,8 @@ export function HomePageClient({
           }}
         >
           <h2
-            style={{
-              fontSize: 20,
-              fontWeight: 500,
-              letterSpacing: '-0.3px',
-              color: 'var(--color-navy)',
-            }}
+            className="section-header-title"
+            style={{ margin: 0 }}
           >
             Browse by sport
           </h2>

@@ -9,6 +9,7 @@ import type { WatchlistFixture } from '@/lib/homepage-types'
 function FixtureScrollCard({ fixture }: { fixture: WatchlistFixture }) {
   return (
     <div
+      className="card-lift"
       style={{
         minWidth: 210,
         background: '#fff',
@@ -20,6 +21,7 @@ function FixtureScrollCard({ fixture }: { fixture: WatchlistFixture }) {
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
+        boxShadow: 'var(--shadow-sm)',
       }}
     >
       {/* Date + time row */}

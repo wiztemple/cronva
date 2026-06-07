@@ -32,15 +32,7 @@ export function HowItWorks() {
       }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <h2
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            color: 'var(--color-navy)',
-            marginBottom: 6,
-            letterSpacing: '-0.3px',
-          }}
-        >
+        <h2 className="section-header-title" style={{ marginBottom: 6 }}>
           How it works
         </h2>
         <p style={{ fontSize: 13, color: 'var(--color-fog)', marginBottom: 28 }}>
@@ -56,21 +48,25 @@ export function HowItWorks() {
             marginBottom: 28,
           }}
         >
-          {STEPS.map((step) => (
+          {STEPS.map((step, i) => (
             <div
               key={step.number}
+              className="card-lift"
               style={{
                 background: '#fff',
                 border: '0.5px solid var(--color-border)',
                 borderRadius: 14,
                 padding: 28,
+                boxShadow: 'var(--shadow-sm)',
+                borderTop: `3px solid ${['var(--color-blue)', 'var(--color-gold)', 'var(--color-navy)'][i]}`,
               }}
             >
               <p
                 style={{
                   fontSize: 32,
-                  fontWeight: 400,
-                  color: '#ECEAE4',
+                  fontWeight: 600,
+                  color: ['var(--color-blue)', 'var(--color-gold)', 'var(--color-navy)'][i],
+                  opacity: 0.35,
                   letterSpacing: '-1px',
                   marginBottom: 12,
                   lineHeight: 1,

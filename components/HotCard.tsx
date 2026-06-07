@@ -4,9 +4,10 @@ import { CalendarIcon } from './CalendarIcon'
 import { TeamLogo } from './TeamLogo'
 import { hasCalendarBrandLogo } from '@/lib/brand-logos'
 import type { HotCardData } from '@/lib/homepage-types'
+import { calendarSyncHref } from '@/lib/calendar-sync'
 import { useSyncState } from '@/hooks/useSyncState'
 import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export type { HotCardData, HotCardEvent } from '@/lib/homepage-types'
 
@@ -27,23 +28,27 @@ export function HotCard({
   const useBrandLogo = hasCalendarBrandLogo(slug)
   const { data: session } = useSession()
   const router = useRouter()
-  const pathname = usePathname()
-  const [synced, sync] = useSyncState(slug)
+  const [synced] = useSyncState(slug)
+  const syncHref = calendarSyncHref(slug)
 
   function handleSync(e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    if (synced) return
-    if (!session?.user) {
-      router.push(`/login?callbackUrl=${encodeURIComponent(pathname || '/')}`)
+    if (synced) {
+      router.push(syncHref)
       return
     }
-    sync()
+    if (!session?.user) {
+      router.push(`/login?callbackUrl=${encodeURIComponent(syncHref)}`)
+      return
+    }
+    router.push(syncHref)
     onSync?.()
   }
 
   return (
     <div
+      className="card-lift"
       style={{
         minWidth: 230,
         background: '#fff',
@@ -52,6 +57,7 @@ export function HotCard({
         padding: 18,
         flexShrink: 0,
         scrollSnapAlign: 'start',
+        boxShadow: 'var(--shadow-sm)',
       }}
     >
       {/* Top row: icon + name/sport + sync button */}
@@ -103,26 +109,8 @@ export function HotCard({
         <button
           type="button"
           onClick={handleSync}
-          style={{
-            fontSize: 12,
-            fontWeight: 500,
-            padding: '6px 14px',
-            borderRadius: 9999,
-            cursor: synced ? 'default' : 'pointer',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-            transition: 'background 120ms',
-            lineHeight: 1.3,
-            ...(synced
-              ? { background: '#EAF3DE', color: '#27500A', border: '0.5px solid #B5D9A0' }
-              : { background: 'var(--color-blue)', color: '#fff', border: '0.5px solid var(--color-blue)' }),
-          }}
-          onMouseEnter={(e) => {
-            if (!synced) e.currentTarget.style.background = '#3A8FD8'
-          }}
-          onMouseLeave={(e) => {
-            if (!synced) e.currentTarget.style.background = 'var(--color-blue)'
-          }}
+          className={`btn-sync${synced ? ' synced' : ''}`}
+          style={{ flexShrink: 0, cursor: synced ? 'default' : 'pointer' }}
         >
           {synced ? 'Synced ✓' : 'Sync'}
         </button>

@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { calendarSyncHref } from '@/lib/calendar-sync'
 import { Badge } from './Badge'
 import { useSyncState } from '@/hooks/useSyncState'
 import { CalendarIcon } from './CalendarIcon'
@@ -48,22 +48,18 @@ export function CalendarCard({
 }: CalendarCardProps) {
   const { data: session } = useSession()
   const router = useRouter()
-  const pathname = usePathname()
-  const [synced, sync] = useSyncState(slug)
-  const [adding, setAdding] = useState(false)
+  const [synced] = useSyncState(slug)
   const isSubscribed = subscribed || synced
+  const syncHref = calendarSyncHref(slug)
 
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    if (isSubscribed || adding) return
     if (!session?.user) {
-      router.push(`/login?callbackUrl=${encodeURIComponent(pathname || '/')}`)
+      router.push(`/login?callbackUrl=${encodeURIComponent(syncHref)}`)
       return
     }
-    setAdding(true)
-    sync()
-    setTimeout(() => setAdding(false), 800)
+    router.push(syncHref)
   }
 
   const nextEventText = nextDate ? `${nextEvent}${nextDate ? ` · ${nextDate}` : ''}` : nextEvent
@@ -96,17 +92,24 @@ export function CalendarCard({
 
       <Link href={`/cal/${slug}`} style={{ textDecoration: 'none', flex: 1, display: 'block' }}>
         <div
+          className="calendar-card-inner"
           style={{
             background: '#fff',
             borderRight: '0.5px solid var(--color-border)',
             borderBottom: '0.5px solid var(--color-border)',
             padding: '20px 18px 16px',
             cursor: 'pointer',
-            transition: 'background 120ms',
+            transition: 'background 150ms ease, box-shadow 150ms ease',
             height: '100%',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-offwhite)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = '#fff' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'var(--color-sky)'
+            e.currentTarget.style.boxShadow = 'inset 0 0 0 1px rgba(74, 159, 232, 0.2)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#fff'
+            e.currentTarget.style.boxShadow = 'none'
+          }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
             <CalendarIcon
@@ -184,7 +187,7 @@ export function CalendarCard({
                 transition: 'background 120ms, color 120ms',
               }}
             >
-              {isSubscribed ? 'Subscribed ✓' : adding ? 'Adding…' : '+ Add'}
+              {isSubscribed ? 'Subscribed ✓' : '+ Sync'}
             </button>
           </div>
 

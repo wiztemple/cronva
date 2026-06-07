@@ -21,7 +21,7 @@ const calendars = [
     description: "Europe's premier club football competition — from the group stage to the final.",
     country: 'europe',
     isFeatured: true,
-    iconUrl: null,
+    iconUrl: '/brand/ucl.svg',
   },
   {
     slug: 'la-liga',
@@ -71,7 +71,7 @@ const calendars = [
     description: "Italy's premier football division — Inter Milan, Juventus, AC Milan and more.",
     country: 'italy',
     isFeatured: false,
-    iconUrl: null,
+    iconUrl: '/brand/italy-seriea.svg',
   },
   {
     slug: 'super-eagles',

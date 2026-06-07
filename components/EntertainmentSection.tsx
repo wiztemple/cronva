@@ -22,6 +22,7 @@ function NigerianShowCard({ show, onSync }: { show: NigerianShow; onSync: () => 
     >
       {/* Poster */}
       <div
+        className="card-lift"
         style={{
           width: 130,
           height: 180,
@@ -34,6 +35,7 @@ function NigerianShowCard({ show, onSync }: { show: NigerianShow; onSync: () => 
           marginBottom: 10,
           position: 'relative',
           overflow: 'hidden',
+          boxShadow: 'var(--shadow-md)',
         }}
       >
         <span style={{ fontSize: 48, lineHeight: 1 }}>{show.emoji}</span>
@@ -71,6 +73,7 @@ function NigerianShowCard({ show, onSync }: { show: NigerianShow; onSync: () => 
 function TourCard({ tour, onSync }: { tour: ArtistTourCard; onSync: () => void }) {
   return (
     <div
+      className="card-lift"
       style={{
         minWidth: 240,
         background: '#fff',
@@ -82,6 +85,7 @@ function TourCard({ tour, onSync }: { tour: ArtistTourCard; onSync: () => void }
         display: 'flex',
         alignItems: 'center',
         gap: 14,
+        boxShadow: 'var(--shadow-sm)',
       }}
     >
       <div

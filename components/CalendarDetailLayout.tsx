@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { parseFixtureTeams, hasTeamBrandLogo } from '@/lib/brand-logos'
+import { TeamLogo } from './TeamLogo'
 import { SubscribeSection } from './SubscribeSection'
 
 export interface CalendarEventItem {
@@ -108,6 +110,10 @@ export function CalendarDetailLayout({
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {events.map((ev, i) => {
               const isSelected = selected.has(ev.externalId)
+              const teams = parseFixtureTeams(ev.title)
+              const showLogos =
+                teams !== null &&
+                (hasTeamBrandLogo(teams.teamA) || hasTeamBrandLogo(teams.teamB))
               return (
                 <label
                   key={ev.id}
@@ -145,9 +151,26 @@ export function CalendarDetailLayout({
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--color-navy)', marginBottom: 2 }}>
-                      {ev.title}
-                    </p>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        flexWrap: 'wrap',
+                        marginBottom: 2,
+                      }}
+                    >
+                      {showLogos && teams && (
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          <TeamLogo team={teams.teamA} size={20} />
+                          <span style={{ fontSize: 11, color: 'var(--color-fog)' }}>vs</span>
+                          <TeamLogo team={teams.teamB} size={20} />
+                        </span>
+                      )}
+                      <p style={{ fontSize: '14px', fontWeight: 500, color: 'var(--color-navy)', margin: 0 }}>
+                        {ev.title}
+                      </p>
+                    </div>
                     {ev.location && (
                       <p style={{ fontSize: '12px', color: 'var(--color-fog)' }}>{ev.location}</p>
                     )}

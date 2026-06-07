@@ -1,29 +1,35 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { NavBar } from '@/components/NavBar'
 import { HeroSplit } from '@/components/HeroSplit'
 import { NavyPanel } from '@/components/NavyPanel'
-import { SubscribePanel } from '@/components/SubscribePanel'
-import { FixtureRow } from '@/components/FixtureRow'
 import { Footer } from '@/components/Footer'
 import { CalendarIcon } from '@/components/CalendarIcon'
+import { CalendarDetailLayout, type CalendarEventItem } from '@/components/CalendarDetailLayout'
 import { formatSubscriberCount, type Calendar } from '@/lib/calendars'
-import type { Fixture } from '@/lib/fixtures'
 
 interface CalendarDetailViewProps {
   calendar: Calendar
   slug: string
-  fixtures: Fixture[]
+  calendarId: string
+  events: CalendarEventItem[]
   related: Calendar[]
+  baseUrl: string
+  isSubscribed: boolean
+  syncMode?: boolean
 }
 
-export function CalendarDetailView({ calendar, slug, fixtures, related }: CalendarDetailViewProps) {
-  const [showAllFixtures, setShowAllFixtures] = useState(false)
-
-  const displayedFixtures = showAllFixtures ? fixtures : fixtures.slice(0, 10)
-
+export function CalendarDetailView({
+  calendar,
+  slug,
+  calendarId,
+  events,
+  related,
+  baseUrl,
+  isSubscribed,
+  syncMode = false,
+}: CalendarDetailViewProps) {
   return (
     <>
       <NavBar />
@@ -67,77 +73,78 @@ export function CalendarDetailView({ calendar, slug, fixtures, related }: Calend
           />
         }
         right={
-          <SubscribePanel
-            slug={slug}
-            calendarName={calendar.name}
-            iconBg={calendar.iconBg}
-          />
+          <div
+            style={{
+              background: '#fff',
+              padding: '28px 32px',
+              borderBottom: '0.5px solid var(--color-border)',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <p
+              style={{
+                fontSize: 13,
+                fontWeight: 500,
+                color: 'var(--color-navy)',
+                marginBottom: 8,
+              }}
+            >
+              {syncMode ? 'Choose your fixtures' : 'Sync to your calendar'}
+            </p>
+            <p style={{ fontSize: 13, color: 'var(--color-fog)', lineHeight: 1.55, margin: 0 }}>
+              {syncMode
+                ? 'Select the events you want below, then add them to Google, Apple, or Outlook.'
+                : 'Add the full calendar in one tap, or pick individual fixtures.'}
+            </p>
+            {!syncMode && (
+              <Link
+                href={`/cal/${slug}?sync=1`}
+                style={{
+                  display: 'inline-block',
+                  marginTop: 14,
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: '#fff',
+                  background: 'var(--color-blue)',
+                  padding: '8px 18px',
+                  borderRadius: 9999,
+                  textDecoration: 'none',
+                }}
+              >
+                + Pick events to sync
+              </Link>
+            )}
+          </div>
         }
       />
 
-      <section
-        className="fixtures-section"
-        style={{ padding: '28px 32px', maxWidth: 1280, margin: '0 auto' }}
-      >
+      {syncMode && (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 16,
+            background: 'var(--color-sky)',
+            borderBottom: '0.5px solid var(--color-border)',
+            padding: '14px 32px',
           }}
         >
-          <h2 className="text-section-title" style={{ color: 'var(--color-navy)', fontSize: 13 }}>
-            Upcoming fixtures
-          </h2>
-          <span style={{ fontSize: 12, color: 'var(--color-blue)', fontWeight: 500 }}>
-            All {fixtures.length} →
-          </span>
-        </div>
-
-        {fixtures.length === 0 ? (
-          <p style={{ fontSize: 14, color: 'var(--color-fog)', padding: '24px 0' }}>
-            No upcoming fixtures scheduled yet.
+          <p style={{ fontSize: 13, color: 'var(--color-navy)', margin: 0, maxWidth: 1280, marginInline: 'auto' }}>
+            <strong>Step 1:</strong> Tick the events you want &nbsp;→&nbsp; <strong>Step 2:</strong> Choose your calendar app on the right
           </p>
-        ) : (
-          <>
-            <div
-              style={{
-                border: '0.5px solid var(--color-border)',
-                borderRadius: 10,
-                overflow: 'hidden',
-                background: '#fff',
-              }}
-            >
-              {displayedFixtures.map((fixture, i) => (
-                <FixtureRow
-                  key={fixture.id}
-                  fixture={fixture}
-                  isLast={i === displayedFixtures.length - 1}
-                />
-              ))}
-            </div>
+        </div>
+      )}
 
-            {!showAllFixtures && fixtures.length > 10 && (
-              <button
-                type="button"
-                onClick={() => setShowAllFixtures(true)}
-                style={{
-                  marginTop: 16,
-                  fontSize: 13,
-                  fontWeight: 500,
-                  color: 'var(--color-blue)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
-              >
-                Load more
-              </button>
-            )}
-          </>
-        )}
+      <section style={{ padding: '32px', maxWidth: 1280, margin: '0 auto' }}>
+        <CalendarDetailLayout
+          events={events}
+          pickable={syncMode}
+          calendarId={calendarId}
+          calendarName={calendar.name}
+          calendarSlug={slug}
+          baseUrl={baseUrl}
+          isSubscribed={isSubscribed}
+        />
       </section>
 
       {related.length > 0 && (
@@ -175,7 +182,7 @@ export function CalendarDetailView({ calendar, slug, fixtures, related }: Calend
             {related.map((rel) => (
               <Link
                 key={rel.slug}
-                href={`/cal/${rel.slug}`}
+                href={`/cal/${rel.slug}?sync=1`}
                 style={{
                   border: '0.5px solid var(--color-border)',
                   borderRadius: 10,
@@ -214,7 +221,7 @@ export function CalendarDetailView({ calendar, slug, fixtures, related }: Calend
                     display: 'inline-block',
                   }}
                 >
-                  + Add
+                  + Sync
                 </span>
               </Link>
             ))}
@@ -226,7 +233,6 @@ export function CalendarDetailView({ calendar, slug, fixtures, related }: Calend
 
       <style>{`
         @media (max-width: 767px) {
-          .fixtures-section { padding: 16px 18px !important; }
           .related-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>

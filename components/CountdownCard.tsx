@@ -21,6 +21,7 @@ export function CountdownCard({ event }: CountdownCardProps) {
 
   return (
     <div
+      className="countdown-card"
       style={{
         minWidth: 280,
         height: 180,
@@ -35,6 +36,7 @@ export function CountdownCard({ event }: CountdownCardProps) {
         background: event.gradient,
         flexShrink: 0,
         scrollSnapAlign: 'start',
+        boxShadow: 'var(--shadow-md)',
       }}
     >
       {/* Background watermark */}
@@ -135,18 +137,19 @@ export function CountdownCard({ event }: CountdownCardProps) {
       {isLive ? (
         <div>
           <span
+            className="live-pulse"
             style={{
               display: 'inline-block',
               background: 'var(--color-gold)',
               color: '#412402',
               fontSize: 11,
-              fontWeight: 500,
+              fontWeight: 600,
               padding: '4px 12px',
               borderRadius: 9999,
               letterSpacing: '0.04em',
             }}
           >
-            LIVE
+            ● LIVE
           </span>
         </div>
       ) : (
@@ -168,9 +171,10 @@ export function CountdownCard({ event }: CountdownCardProps) {
               }}
             >
               <p
+                className={label === 'SEC' ? 'countdown-tick' : undefined}
                 style={{
                   fontSize: 22,
-                  fontWeight: 500,
+                  fontWeight: 600,
                   color: '#fff',
                   letterSpacing: '-0.5px',
                   lineHeight: 1,

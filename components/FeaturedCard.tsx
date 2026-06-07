@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { calendarSyncHref } from '@/lib/calendar-sync'
 import { Badge } from './Badge'
 import { useSyncState } from '@/hooks/useSyncState'
 import { CalendarIcon } from './CalendarIcon'
@@ -36,21 +36,17 @@ export function FeaturedCard({
 }: FeaturedCardProps) {
   const { data: session } = useSession()
   const router = useRouter()
-  const pathname = usePathname()
-  const [synced, sync] = useSyncState(slug)
-  const [adding, setAdding] = useState(false)
+  const [synced] = useSyncState(slug)
+  const syncHref = calendarSyncHref(slug)
 
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    if (synced || adding) return
     if (!session?.user) {
-      router.push(`/login?callbackUrl=${encodeURIComponent(pathname || '/')}`)
+      router.push(`/login?callbackUrl=${encodeURIComponent(syncHref)}`)
       return
     }
-    setAdding(true)
-    sync()
-    setTimeout(() => setAdding(false), 800)
+    router.push(syncHref)
   }
 
   return (
@@ -62,10 +58,19 @@ export function FeaturedCard({
           padding: '22px 28px',
           borderBottom: '0.5px solid var(--color-border)',
           cursor: 'pointer',
-          transition: 'background 120ms',
+          transition: 'background 150ms ease, padding-left 150ms ease, border-left 150ms ease',
+          borderLeft: '3px solid transparent',
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-offwhite)' }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = '#fff' }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'var(--color-sky)'
+          e.currentTarget.style.borderLeftColor = 'var(--color-blue)'
+          e.currentTarget.style.paddingLeft = '25px'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = '#fff'
+          e.currentTarget.style.borderLeftColor = 'transparent'
+          e.currentTarget.style.paddingLeft = '28px'
+        }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -126,7 +131,7 @@ export function FeaturedCard({
               transition: 'background 120ms, color 120ms',
             }}
           >
-            {synced ? '✓ Added' : adding ? 'Adding…' : 'Add'}
+            {synced ? '✓ Synced' : 'Sync'}
           </button>
         </div>
       </div>

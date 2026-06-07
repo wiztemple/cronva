@@ -1,6 +1,8 @@
 /** Local brand assets in /public/brand — keyed by calendar slug */
 export const CALENDAR_BRAND_LOGOS: Record<string, string> = {
   epl: '/brand/Premier_League_Logo_Alternative_0.svg',
+  'champions-league': '/brand/ucl.svg',
+  'serie-a': '/brand/italy-seriea.svg',
   'formula-1': '/brand/Formula_1_Logo_0.svg',
   nba: '/brand/NBA_id-njA-Hob_0.svg',
   'world-cup-2026': '/brand/fifa26.svg',

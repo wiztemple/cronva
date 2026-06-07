@@ -271,7 +271,7 @@ export async function getCalendarBySlug(slug: string): Promise<Calendar | null> 
   return toCalendarUI(row as DbCalendarRow)
 }
 
-export async function getCalendarDetail(slug: string) {
+export async function getCalendarDetail(slug: string, userId?: string) {
   const now = new Date()
 
   const row = await prisma.calendar.findUnique({
@@ -290,6 +290,14 @@ export async function getCalendarDetail(slug: string) {
 
   const calendar = toCalendarUI(row as DbCalendarRow)
 
+  let isSubscribed = false
+  if (userId) {
+    const sub = await prisma.userSubscription.findUnique({
+      where: { userId_calendarId: { userId, calendarId: row.id } },
+    })
+    isSubscribed = Boolean(sub)
+  }
+
   const relatedRows = await prisma.calendar.findMany({
     where: {
       category: row.category,
@@ -303,19 +311,14 @@ export async function getCalendarDetail(slug: string) {
 
   return {
     calendar,
-    fixtures: row.events.map((ev) => ({
+    calendarId: row.id,
+    isSubscribed,
+    events: row.events.map((ev) => ({
       id: ev.id,
+      externalId: ev.externalId,
       title: ev.title,
-      competition: calendar.name,
-      venue: ev.location ?? 'TBC',
-      date: ev.startDatetime,
-      time: new Intl.DateTimeFormat('en-NG', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-        timeZone: 'Africa/Lagos',
-      }).format(ev.startDatetime) + ' WAT',
-      badge: isTonight(ev.startDatetime) ? ('live' as const) : undefined,
+      startDatetime: ev.startDatetime.toISOString(),
+      location: ev.location,
     })),
     related: mapRows(relatedRows as DbCalendarRow[]),
   }
